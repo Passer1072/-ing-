@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "j:/C++ Location/Course_3 HanShu/P_00 test/cmake-build-debug"
+			"value" : "j:/gitHub_save/-ing-/P_00 test/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -431,7 +431,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "J:/C++ Location/Course_3 HanShu/P_00 test/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "J:/gitHub_save/-ing-/P_00 test/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -503,7 +503,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "J:/C++ Location/Course_3 HanShu/P_00 test"
+			"value" : "J:/gitHub_save/-ing-/P_00 test"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1119,7 +1119,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "J:/C++ Location/Course_3 HanShu/P_00 test/cmake-build-debug"
+			"value" : "J:/gitHub_save/-ing-/P_00 test/cmake-build-debug"
 		},
 		{
 			"name" : "Course_3_HanShu_IS_TOP_LEVEL",
@@ -1143,7 +1143,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "J:/C++ Location/Course_3 HanShu/P_00 test"
+			"value" : "J:/gitHub_save/-ing-/P_00 test"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
