@@ -44,46 +44,12 @@ void xuanxiang(){
     printf("3.学生成绩删除\n");
     printf("4.学生成绩查询\n");
     printf("5.学生成绩保存\n");
+    printf("6.学生成绩排序(升序)\n");
     printf("0.退       出\n");
     printf("请输入序号：");
     // scanf 是 C 语言中用于从用户或文件读取输入的函数，它的意思是扫描格式化字符串。
     scanf("%d", &choice);
 }           // 定义函数xuanxiang打印全部选项，并保存用户输入的项目编号
-void chaXun(){
-int X;
-int exitFlag = 0;
-    // while (!exitFlag)为真（1）时结束循环，为假（0）时继续循环。
-    while (!exitFlag) {
-        printf("输入要查询的编号（0退出）：");
-        // 从键盘输入存储在X中。
-        scanf("%d", &X );
-        // ==用于判断左右两边，判断选项X是否为0.
-        if (X == 0){
-            // 退出循环的编号
-            exitFlag = 1;
-        } else {
-            // 标记是否找到学生编号，默认标记0代表没有找到。
-            // 详细逻辑解释：首先初始化Found为假，然后开始for循环，通过if判断来寻找与X值相等的二维表第一列的学号，1.如果找到则执行if中的函数，打印
-            //出对应的学号与成绩，并将Found标记为1（真）表示已经找到，随后跳出for循环。2.如果没有找到则不会执行if中的函数，五次for循环依然没有找到相等值之后
-            //Found依然保持0(假)，自动跳出for循环经过if(!Found)的判断，为真（1）时运行，为假（0）则跳过，但是这里有！号所以取反，所以这里Found = 0（标记没有找到）
-            //时执行if中函数输出“未找到该学生”。
-            int Found = 0;
-            // 循环查找对应的学号
-            for (int i = 0; i < 5; ++i) {
-                if(passer[i][0] == X){
-                    // 找到后打印对应学号与成绩
-                    printf("学号：%d  成绩：%d\n",X,passer[i][1]);
-                    // 找到后标记Found = 1表示已找到
-                    Found = 1;
-                    break;
-                }
-            }
-            if(!Found){
-                printf("未找到该学生\n");
-            }
-        }
-    }
-}              // 定义函数chaXun进行成绩查询
 void luRu(){
     // 录入成绩
     for (
@@ -122,7 +88,7 @@ void xiuGai(){
     if (!found) {
         printf("未找到该学生\n");
     }
-    }              // 定义函数xiuGai进行成绩修改
+}              // 定义函数xiuGai进行成绩修改
 void DeleteStuGrades(){
     int StuNumber;
     int Found = 0;
@@ -143,21 +109,125 @@ void DeleteStuGrades(){
                 passer[j][1] = passer[j + 1][1];
 
             }
-            // 错误示范
-//            for (int i = StuNumber; i < MaxStu - 1; ++i) {
-//                passer[i][0] = passer[i + 1][0];
-//                passer[i][1] = passer[i + 1][1];
             // 清除最后一行的数据
             passer[MaxStu - 1][0] = 0;
             passer[MaxStu - 1][1] = 0;
             printf("删除完成\n");
-         }
+
+            // （优化）删除完成后直接break打断退出循环
+            break;
+        }
     }
     // 真假函数判断
     if(!Found){
         printf("未找到该学生\n");
     }
 }     // 法一（BUG-已解决）：定音函数DeleteStuGrades进行成绩删除
+void chaXun(){
+int X;
+int exitFlag = 0;
+    // while (!exitFlag)为真（1）时结束循环，为假（0）时继续循环。
+    while (!exitFlag) {
+        printf("输入要查询的编号（0退出）：");
+        // 从键盘输入存储在X中。
+        scanf("%d", &X );
+        // ==用于判断左右两边，判断选项X是否为0.
+        if (X == 0){
+            // 退出循环的编号
+            exitFlag = 1;
+        } else {
+            // 标记是否找到学生编号，默认标记0代表没有找到。
+            // 详细逻辑解释：首先初始化Found为假，然后开始for循环，通过if判断来寻找与X值相等的二维表第一列的学号，1.如果找到则执行if中的函数，打印
+            //出对应的学号与成绩，并将Found标记为1（真）表示已经找到，随后跳出for循环。2.如果没有找到则不会执行if中的函数，五次for循环依然没有找到相等值之后
+            //Found依然保持0(假)，自动跳出for循环经过if(!Found)的判断，为真（1）时运行，为假（0）则跳过，但是这里有！号所以取反，所以这里Found = 0（标记没有找到）
+            //时执行if中函数输出“未找到该学生”。
+            int Found = 0;
+            // 循环查找对应的学号
+            for (int i = 0; i < 5; ++i) {
+                if(passer[i][0] == X){
+                    // 找到后打印对应学号与成绩
+                    printf("学号：%d  成绩：%d\n",X,passer[i][1]);
+                    // 找到后标记Found = 1表示已找到
+                    Found = 1;
+                    break;
+                }
+            }
+            if(!Found){
+                printf("未找到该学生\n");
+            }
+        }
+    }
+}              // 定义函数chaXun进行成绩查询
+void SaveGradesToFile() {
+    // 这是一个变量的定义，表示file是一个指向FILE类型的指针，FILE类型是C语言中用于表示文件的结构体。
+    FILE *file;
+    // 用fopen函数打开一个名为grades.txt的文件，并以写入模式（“w”）打开
+    file = fopen("grades.txt", "w"); // 打开一个文件来写入数据（如果文件不存在，则会创建文件）
+
+    // 如果file变量等于NULL，说明文件打开失败，就执行大括号里面的语句。
+    if (file == NULL) {
+        printf("无法打开文件\n");
+        return;
+    }
+
+    // 将学生成绩数据写入文件
+    for (int i = 0; i < MaxStu; ++i) {
+        // 这是一个输出语句，表示将passer[i][0]和passeri（两个整数变量，表示第i位学生的学号和成绩）按照"%d %d\n"的格式（两个整数之间有空格，
+        //后面有换行符）写入到file指向的文件中。passer是一个二维数组，用于存储所有学生的成绩数据。
+        fprintf(file, "%d %d\n", passer[i][0], passer[i][1]);
+    }
+
+    fclose(file); // 关闭文件
+    printf("学生成绩已保存到文件 grades.txt\n");
+}   // 定义函数SaveGradesToFile保存当前二维表内的成绩至grades.txt
+void choicePaiXu(){
+    int n = 5;  // 表示学生成绩表 passer 中的行数或学生的数量。
+    int temp0;  // temp :用于在元素交换时暂时存储元素的值。
+    int temp1;
+    /*
+     这一行定义了几个整数变量，用于在选择排序中的循环和元素交换中使用。
+     i 和 j :是循环计数器
+     minIndex :用于存储未排序部分的最小元素的索引，
+     */
+    int i, j, minIndex;
+
+    // 打印提示语：未排序的数组。
+    printf("未排序的数组：\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", passer[i][0]);
+        printf("%d\n", passer[i][1]);
+    }
+
+// ————————————————————————————————————————————————————————————————————————————————————————————————
+    for (i = 0; i < n - 1; i++) {
+        // 假设当前循环开始时，第一个元素是最小的，从第一个数开始遍历查询对比
+        minIndex = i;
+        // 在未排序部分找到最小元素的索引
+        /*
+         如果chengJi[j]中的数小于chengJi[minIndex]中的数，则将minIndex变为j。
+         */
+        for (j = i + 1; j < n; j++) {
+            if (passer[j][1] < passer[minIndex][1]) {
+                minIndex = j;
+            }
+        }
+
+        // 将最小元素与当前位置的元素交换
+        temp0 = passer[i][0];// 1.将当前元素的值存储在 temp 中
+        temp1 = passer[i][1];
+        passer[i][0] = passer[minIndex][0];  // 2.将最小元素的值复制到当前位置
+        passer[i][1] = passer[minIndex][1];
+        passer[minIndex][0] = temp0;    // 3.将 temp 中的值赋给最小元素的位置。
+        passer[minIndex][1] = temp1;
+    }
+// ————————————————————————————————————————————————————————————————————————————————————————————————
+    // 打印提示语：排序后的数组。
+    printf("\n排序后的数组：\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", passer[i][0]);
+        printf("%d\n", passer[i][1]);
+    }
+}         // 选择排序
 void DeleteStuGrades2() {
     int StuNumber;
     printf("请输入要删除的学号:");
@@ -270,7 +340,7 @@ void ChoiceByIfelse(){
             printf("无效\n") ;
         }
 }      // 定义函数ChoiceByIfelse，项目选择法二：if...else
-void daYinZu(){
+void testAll(){
     // 打印二维数组
     for (int i = 0; i < MaxStu ; ++i) {
         // 打印第0列学号
@@ -279,28 +349,6 @@ void daYinZu(){
         printf("%d分\n", passer[i][1]);
     }
 }             // test：打印二维数组
-void SaveGradesToFile() {
-    // 这是一个变量的定义，表示file是一个指向FILE类型的指针，FILE类型是C语言中用于表示文件的结构体。
-    FILE *file;
-    // 用fopen函数打开一个名为grades.txt的文件，并以写入模式（“w”）打开
-    file = fopen("grades.txt", "w"); // 打开一个文件来写入数据（如果文件不存在，则会创建文件）
-
-    // 如果file变量等于NULL，说明文件打开失败，就执行大括号里面的语句。
-    if (file == NULL) {
-        printf("无法打开文件\n");
-        return;
-    }
-
-    // 将学生成绩数据写入文件
-    for (int i = 0; i < MaxStu; ++i) {
-        // 这是一个输出语句，表示将passer[i][0]和passeri（两个整数变量，表示第i位学生的学号和成绩）按照"%d %d\n"的格式（两个整数之间有空格，
-        //后面有换行符）写入到file指向的文件中。passer是一个二维数组，用于存储所有学生的成绩数据。
-        fprintf(file, "%d %d\n", passer[i][0], passer[i][1]);
-    }
-
-    fclose(file); // 关闭文件
-    printf("学生成绩已保存到文件 grades.txt\n");
-}   // 定义函数SaveGradesToFile保存当前二维表内的成绩至grades.txt
 
 
 int main(){
@@ -335,11 +383,18 @@ int main(){
                 printf("5.学生成绩保存\n");
                 SaveGradesToFile();// 调用SaveGradesToFile函数保存成绩至grades.txt
                 break;
-            case 6:
-                printf("6.test：打印目前二维数组\n");
-                daYinZu();// 测试：遍历打印当前数组
 
+            case 6:
+                printf("7.选择排序\n");
+                choicePaiXu();
                 break;
+
+            case 999:
+                printf("test：打印目前二维数组\n");
+                testAll();// 测试：遍历打印当前数组
+                break;
+
+
             case 0:
                 printf("退出\n");
                 // 跳出循环退出程序
