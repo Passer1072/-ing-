@@ -4,6 +4,7 @@ int choice;
 int const MaxStu = 5;
 int passer[5][2]; // 特殊：数组的维度必须是常量表达式
 
+
 void xuanxiang(){
     // 打印选项
     printf("   菜  单\n");
@@ -12,8 +13,9 @@ void xuanxiang(){
     printf("3.学生成绩删除\n");
     printf("4.学生成绩查询\n");
     printf("5.学生成绩保存\n");
-    printf("6.学生成绩排序(升序)\n");
-    printf("7.读取存储的成绩\n");
+    printf("6.学生成绩排序(选择)\n");
+    printf("7.学生成绩排序(冒泡)\n");
+    printf("8.读取存储的成绩\n");
     printf("0.退       出\n");
     printf("请输入序号：");
     // scanf 是 C 语言中用于从用户或文件读取输入的函数，它的意思是扫描格式化字符串。
@@ -93,8 +95,8 @@ void DeleteStuGrades(){
     }
 }     // 法一（BUG-已解决）：定音函数DeleteStuGrades进行成绩删除
 void chaXun(){
-int X;
-int exitFlag = 0;
+    int X;
+    int exitFlag = 0;
     // while (!exitFlag)为真（1）时结束循环，为假（0）时继续循环。
     while (!exitFlag) {
         printf("输入要查询的编号（0退出）：");
@@ -237,6 +239,28 @@ void LoadGradesFromFile() {
     fclose(file); //关闭文件
     printf("学生成绩已从文件 %s 读取\n",filename);// %s：输出一个字符串
 } // 读取学生成绩
+void maoPaoPaiXu(){
+    int save1; // 编号
+    int save2; // 成绩
+    int judge; // 是否完成排序的标记
+    for (int i = 0; i < MaxStu - 1 ; ++i) {
+        judge = 0; // 已完成排序标记
+        for (int j = 0; j < MaxStu - i - 1; ++j) {
+            if (passer[j][1] > passer[j + 1][1]){
+                save2 = passer[j][1]; // 暂存高成绩学生成绩
+                save1 = passer[j][0]; // 暂存高成绩学生学号
+                passer[j][1] = passer[j + 1][1]; // 将低成绩学生成绩向上移动覆盖高成绩学生成绩
+                passer[j][0] = passer[j + 1][0]; // 将低成绩学生学号向上移动覆盖高成绩学生学号
+                passer[j + 1][1] = save2; // 将高成绩学生成绩覆盖在原本低成绩学生成绩上
+                passer[j + 1][0] = save1; // 将高成绩学生学号覆盖在原本低成绩学生学号上
+                judge = 1; // 未完成排序标记
+            }
+        }
+        if (judge == 0){
+            break;
+        }
+    }
+}
 
 
 
@@ -251,7 +275,7 @@ int main(){
         switch (choice) {
             case 1:
                 printf("1.学生成绩录入\n");
-               luRu();// 调用函数luRu用于录入成绩
+                luRu();// 调用函数luRu用于录入成绩
 
                 break;// break语句用于跳出 switch 语句，防止执行其他 case 的语句。
             case 2:
@@ -265,7 +289,7 @@ int main(){
                 break;
             case 4:
                 printf("4.学生成绩查询\n");
-               chaXun();// 调用查询函数chaXun用于查询成绩（循环）
+                chaXun();// 调用查询函数chaXun用于查询成绩（循环）
 
                 break;
             case 5:
@@ -278,8 +302,15 @@ int main(){
                 choicePaiXu();
                 break;
 
+
             case 7:
-                printf("7.读取存储的成绩\n");
+                printf("7.冒泡排序\n");
+                maoPaoPaiXu();
+                testAll();
+                break;
+
+            case 8:
+                printf("8.读取存储的成绩\n");
                 LoadGradesFromFile();
                 break;
 
