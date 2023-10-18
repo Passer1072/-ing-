@@ -1,3 +1,0 @@
-J:/gitHub_save/-ing-/P_00 test/P_02_Read/cmake-build-debug/CMakeFiles/P_02_Read.dir
-J:/gitHub_save/-ing-/P_00 test/P_02_Read/cmake-build-debug/CMakeFiles/edit_cache.dir
-J:/gitHub_save/-ing-/P_00 test/P_02_Read/cmake-build-debug/CMakeFiles/rebuild_cache.dir
